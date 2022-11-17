@@ -68,7 +68,7 @@ const setProfile = async (sid, name, picture) => {
     });
 };
 
-const getTwok = async (sid, uid, tid) => {
+const getTwok = async (sid, tid, uid) => {
     return await RequestHandler("getTwok", { sid: sid, uid: uid, tid: tid });
 };
 

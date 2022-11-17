@@ -29,7 +29,7 @@ export default function App() {
 
   
   return (
-    <SidContext.Provider value={{sid, setSid}}>
+    <SidContext.Provider value={sid}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Bacheca">
           <Stack.Screen name="Bacheca" component={Bacheca} />
