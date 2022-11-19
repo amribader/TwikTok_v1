@@ -1,15 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 import { register } from './components/CommunicationController';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import BachecaUtente from './routes/screens/BachecaUtente';
-import UtentiSeguiti from './routes/screens/UtentiSeguiti';
-import Bacheca from './routes/screens/Bacheca';
+import MyTabs from './routes/screens/MyTabs';
 import { createContext } from 'react';
-import {useState, useEffect} from 'react';
-
-const Stack = createNativeStackNavigator();
+import { useState, useEffect } from 'react';
 
 const SidContext = createContext();
 
@@ -19,27 +12,21 @@ export default function App() {
 
   useEffect(() => {
     register()
-    .then((response)=> setSid(response.sid))
-    /* .then((response)=> {
-      console.log(response.sid)
-      return setSid(response.sid)})
-
-    console.log(sid) */
+      .then((response) => setSid(response.sid))
   }, []);
 
-  
+
   return (
     <SidContext.Provider value={sid}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Bacheca">
-          <Stack.Screen name="Bacheca" component={Bacheca} />
-          <Stack.Screen name="BachecaUtente" component={BachecaUtente} />
-          <Stack.Screen name="UtentiSeguiti" component={UtentiSeguiti} />
-        </Stack.Navigator>
+        <MyTabs />
       </NavigationContainer>
     </SidContext.Provider>
 
   );
 }
 
-export {SidContext};
+
+
+
+export { SidContext };
