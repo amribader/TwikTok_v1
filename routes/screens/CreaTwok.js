@@ -24,7 +24,7 @@ const CreaTwok = () => {
           style={[styles.colorSelect, { backgroundColor: color }]}
           onPress={() => {
             console.log(color)             
-            setColor({ color })
+            setColor(color)
             return
           }}
         />
@@ -44,7 +44,7 @@ const CreaTwok = () => {
           onChangeText={text => setText(text)}
         />
         {text ? (
-          <View style={{backgroundColors:{color}}}>
+          <View style={{backgroundColor:color}}>
             <Text>{text}</Text>
           </View>
 
