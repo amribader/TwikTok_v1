@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { SafeAreaView, ScrollView, View, Text, TouchableOpacity, StyleSheet, Slider, Dimensions, KeyboardAvoidingView, Button } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { useFonts } from 'expo-font';
+import {useFonts} from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback } from 'react';
 
@@ -10,9 +10,9 @@ import { useCallback } from 'react';
 const CreaTwok = () => {
 
   let [fontsLoaded] = useFonts({
-    'Anton-Regular': require('../../assets/font/Anton-Regular.ttf'),
-    'BhuTukaExpandedOne': require('../../assets/font/BhuTukaExpandedOne-Regular.ttf'),
-    'DancingScript': require('../../assets/font/DancingScript-VariableFont_wght.ttf'),
+    'Anton-Regular' : require('../../assets/font/Anton-Regular.ttf'),
+    'BhuTukaExpandedOne' : require('../../assets/font/BhuTukaExpandedOne-Regular.ttf'),
+    'DancingScript' : require('../../assets/font/DancingScript-VariableFont_wght.ttf'),
   })
 
 
@@ -23,8 +23,8 @@ const CreaTwok = () => {
   //const [fontSize, setFontSize] = useState(10);
 
   const [open, setOpen] = useState(false);
-
-
+  
+  
   const [fontDimValue, setFontDimValue] = useState(10);
 
   const [fontTypeValue, setFontTypeValue] = useState(null);
@@ -35,26 +35,26 @@ const CreaTwok = () => {
     { label: 'Grande', value: 44 }
   ]);
 
-  /*   const [fontType, setFontType] = useState([
-      { label: 'normal', value: 'normal' },
-      { label: 'italic', value: 'italic' },
-      { label: 'Anton-Regular', value: 'Anton-Regular' }
-    ]); */
+/*   const [fontType, setFontType] = useState([
+    { label: 'normal', value: 'normal' },
+    { label: 'italic', value: 'italic' },
+    { label: 'Anton-Regular', value: 'Anton-Regular' }
+  ]); */
 
   const [fontType, setFontType] = useState([
     { label: 'BhuTukaExpandedOne', value: 'BhuTukaExpandedOne' },
     { label: 'DancingScript', value: 'DancingScript' },
     { label: 'Anton-Regular', value: 'Anton-Regular' }
   ]);
-
-  ////////////////////////////////////////////////////////////////////////////////////
+  
+////////////////////////////////////////////////////////////////////////////////////
   const [fontHorizontal, setFontHorizontal] = useState([
     { label: 'Sinistra', value: 'left' },
     { label: 'Centro', value: 'center' },
     { label: 'Destra', value: 'right' }
   ]);
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////R
+////////////////////////////////////////////////////////////////////////////////////////////////R
   const [fontVertical, setFontVertical] = useState([
     { label: 'Alto', value: 0 },
     { label: 'Basso', value: 1 },
@@ -96,123 +96,91 @@ const CreaTwok = () => {
     //<KeyboardAvoidingView style={styles.container} behavior="padding">
     //<ScrollView>
 
-    <SafeAreaView onLayout={onLayoutRootView} behavior="padding" style={styles.container}>
-      <Text style={{ fontFamily: 'Anton-Regular', fontSize: 40 }}>CIAOOOOOO</Text>
-      <TextInput
-        //style={styles.input}
-        label="Inserisci Testo Twok"
-        value={text}
-        onChangeText={text => setText(text)}
-      />
-      {text ? (
-        <View style={{ backgroundColor: color }}>
-          <Text style={{ fontSize: fontDimValue, fontFamily: fontTypeValue, fontStyle: fontTypeValue }}>{text}</Text>
+      <KeyboardAvoidingView style={styles.container} onLayout={onLayoutRootView} behavior="padding">
+        <Text style={{fontFamily : 'Anton-Regular' , fontSize:40}}>CIAOOOOOO</Text>
+        <TextInput
+          //style={styles.input}
+          label="Inserisci Testo Twok"
+          value={text}
+          onChangeText={text => setText(text)}
+        />
+        {text ? (
+          <View style={[styles.twokStyle, { backgroundColor: color }]}>
+            <Text style={[styles.textStyle,{fontSize: fontDimValue, fontFamily: fontTypeValue, fontStyle: fontTypeValue }]}>{text}</Text>
+          </View>
+
+        ) : (
+          <></>
+        )}
+
+        <View style={[styles.ComboBoxRow,{}]}>
+
+          <View>
+            {/* FONT DIMENSIONI */}
+            <DropDownPicker
+              open={fontDimOpen}
+              value={fontDimValue}
+              items={fontDim}
+              setOpen={setFontDimOpen}
+              setValue={setFontDimValue}
+              setItems={setFontDim}
+            />
+          </View>
+
+
+          <View>
+            {/* FONT TYPE */}
+            <DropDownPicker
+              open={open}
+              value={fontTypeValue}
+              items={fontType}
+              setOpen={setOpen}
+              setValue={setFontTypeValue}
+              setItems={setFontType}
+            />
+          </View>
+
+
         </View>
 
-      ) : (
-        <></>
-      )}
 
-      <View style={[styles.ComboBoxRow, {}]}>
-
-
-
-        {/* FONT DIMENSIONI */}
-        <DropDownPicker
-          style={{
-            backgroundColor: "crimson"
-          }}
-          disabledStyle={{
-            opacity: 0.5
-          }}
-          textStyle={{
-            fontSize: 15
-          }}
-          labelStyle={{
-            fontWeight: "bold"
-          }}
-          containerStyle={{
-            width: '40%',
-          }}
-          open={fontDimOpen}
-          value={fontDimValue}
-          items={fontDim}
-          setOpen={setFontDimOpen}
-          setValue={setFontDimValue}
-          setItems={setFontDim}
-        />
-
-
-
-
-        {/* FONT TYPE */}
-        <DropDownPicker
-          style={{
-            backgroundColor: "crimson"
-          }}
-          disabledStyle={{
-            opacity: 0.5
-          }}
-          textStyle={{
-            fontSize: 15
-          }}
-          labelStyle={{
-            fontWeight: "bold"
-          }}
-          containerStyle={{
-            width: '40%',
-          }}
-          open={open}
-          value={fontTypeValue}
-          items={fontType}
-          setOpen={setOpen}
-          setValue={setFontTypeValue}
-          setItems={setFontType}
-        />
-
-
-
-      </View>
-
-
-      <View style={{ marginTop: 120 }}>
-
+        <View style={{marginTop:120}}>
+        
         <TouchableOpacity
-          //style={styles.button}
+          style={styles.button}
           onPress={handleChangeColor}
         >
           <Text>Press Here</Text>
         </TouchableOpacity>
-      </View>
+        </View>
+          
+        
 
+        <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>
+          {renderColor()}
+        </View>
 
-
-      <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>
-        {renderColor()}
-      </View>
-
-      {/* <Button style={styles.create}>
+        {/* <Button style={styles.create}>
 
         </Button> */}
-      {/* 
+        {/* 
 <CirclePicker 
   color="red"
   onChangeComplete={handleChangeColor}
 /> */}
-    </SafeAreaView>
+      </KeyboardAvoidingView>
 
-    // </ScrollView>
+   // </ScrollView>
     // </KeyboardAvoidingView>
 
 
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     //display: flex,
-    justifyContent: 'center',
-    flex: 1,
+    justifyContent: 'space-around',
+    //flex: 1,
     margin: 20,
     marginTop: 100
   },
@@ -262,18 +230,12 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   ComboBoxRow: {
-    justifyContent: "space-between",
+    justifyContent: 'space-around',
     flexDirection: "row",
-    //alignItems: 'center',
-    //alignContent: 'space-around',
-    //height: 'auto',
-    //width: 'auto',
-    //padding: 15,
-    //flexWrap: "wrap"
-    //flex: 1,
+    flex: 1,
     padding: 20,
     //marginBottom: 50,
-    //height: '30%',
+    height:400,
   },
   twokStyle: {
     width: "100%",
