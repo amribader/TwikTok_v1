@@ -18,7 +18,8 @@ const MyTabs = () => {
             labelStyle={{ fontSize: 12 }}
             //style={{ backgroundColor: 'tomato' }}
             screenOptions={{
-                tabBarActiveTintColor: '#e91e63',
+                //tabBarActiveTintColor: '#e91e63',
+                tabBarActiveTintColor: '#000000',
             }}
         >
             <Tab.Screen
