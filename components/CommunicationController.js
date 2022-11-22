@@ -114,6 +114,10 @@ const getFollowed = async (sid) => {
     return await RequestHandler("getFollowed", { sid: sid });
 };
 
+const isFollowed = async (sid, uid) => {
+    return await RequestHandler("isFollowed", { sid: sid, uid: uid});
+};
+
 export {
     register,
     getProfile,
@@ -124,4 +128,5 @@ export {
     unfollow,
     getFollowed,
     setProfile,
+    isFollowed,
 };

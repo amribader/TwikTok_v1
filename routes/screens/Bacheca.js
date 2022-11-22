@@ -1,5 +1,5 @@
 import { StyleSheet, Button, Text, View, ScrollView } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { SafeAreaView, FlatList, StatusBar, Dimensions } from 'react-native';
 import Twok from '../../components/Twok';
 import ListaTwok from '../../components/ListaTwok';
@@ -8,20 +8,25 @@ import ListaTwok from '../../components/ListaTwok';
 import {SingleTwokLoaderHelper} from '../../components/TwokLoaderHelper';
 
 import { getTwok } from '../../components/CommunicationController';
+import { SidContext } from '../../App';
 /* 
 • Bacheca dei twok. Una schermata mostra, uno per volta, i twok creati da altri utenti e 
 forniti dal server. L’utente può anche vedere l’autore del twok (immagine e nome)
 */
 
-const Bacheca = () => {
-    const sid = 'eWMFf6iZzJIizpmEbwqb'
+const Bacheca = ({navigation}) => {
+    //const sid = 'eWMFf6iZzJIizpmEbwqb'
+    const sid = useContext(SidContext);
     const [mapAut, SetmapAut] = useState(new Map());
     
     const [getData, setData] = useState([]);
-    const [bool, setBol] = useState([false]);
+    const [bool, setBol] = useState(false);
     
     const [tidSequence, setTidSequence] = useState(1);
     
+    useEffect(() => {
+        sid ? setBol(true) : setBol(false)
+    }, [sid]);
 
     
     const [map, SetMap] = useState(new Map());
@@ -40,7 +45,7 @@ const Bacheca = () => {
                         tid={tidSequence}
                         map={map}
                         SetMap={SetMap}
-
+                        navigation={navigation}
                         />
                     </View>
                 ) : (

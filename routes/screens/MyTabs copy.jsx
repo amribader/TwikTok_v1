@@ -9,50 +9,33 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Profilo from './Profilo';
 
-const SettingsStack = createNativeStackNavigator();
+
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 const MyTabs = () => {
     return (
         //<NavigationContainer independent={true}>
         <Tab.Navigator
-            
             initialRouteName="Bacheca"
             //activeColor="#e91e63"
             labelStyle={{ fontSize: 12 }}
             //style={{ backgroundColor: 'tomato' }}
             screenOptions={{
-                headerShown: false
+                //tabBarActiveTintColor: '#e91e63',
+                tabBarActiveTintColor: '#000000',
             }}
         >
             <Tab.Screen
-                name="Bacheca" options={{
-                    tabBarLabel: 'Home',
-                    tabBarIcon: ({ color }) => (
-                        <MaterialCommunityIcons name="home" color={color} size={26} />
-                    ),
-                    headerShown: false
-                }}
-                >{/* 
+                name="Bacheca"
                 component={Bacheca}
                 options={{
                     tabBarLabel: 'Home',
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons name="home" color={color} size={26} />
                     ),
-                }} */}
-
-                {() => (
-                    <SettingsStack.Navigator  screenOptions={{
-                        headerShown: false}}>
-                        <SettingsStack.Screen name="Home" component={Bacheca} screenOptions={{
-                headerShown: false}} />
-                        <SettingsStack.Screen name="BachecaUtente" component={BachecaUtente} />
-                    </SettingsStack.Navigator>
-                )}
-            </Tab.Screen>
+                }}
+            />
             <Tab.Screen
                 name="CreaTwok"
                 component={CreaTwok}
@@ -65,7 +48,7 @@ const MyTabs = () => {
             />
             <Tab.Screen
                 name="Profile"
-                component={Profilo}
+                component={BachecaUtente}
                 options={{
                     tabBarLabel: 'Profile',
                     tabBarIcon: ({ color }) => (

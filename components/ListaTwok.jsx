@@ -5,8 +5,9 @@ import { SingleTwokLoaderHelper } from './TwokLoaderHelper';
 import { SingleTwokHandler } from './TwokLoaderHelper';
 import { oneTwok } from './TwokLoaderHelper';
 
-const ListaTwok = ({ sid, tid, map, setMap }) => {
+const ListaTwok = ({ sid, tid, map, setMap, navigation }) => {
     const [getData, setData] = useState([]);
+    const [mapAut, SetmapAut] = useState(new Map());
     useEffect(() => {
 
         SingleTwokHandler(sid, tid, map)
@@ -21,6 +22,9 @@ const ListaTwok = ({ sid, tid, map, setMap }) => {
         //console.log(item)
         <Twok
             item={item}
+            navigation = {navigation}
+            auts={mapAut}
+            onLoadPicture={SetmapAut}
         />
     );
 

@@ -25,6 +25,7 @@ const CreaTwok = ({ navigation }) => {
   const sid = useContext(SidContext);
 
   const [getText, setText] = useState('');
+  
   const [fontDimOpen, setFontDimOpen] = useState(false);
 
   //const [fontSize, setFontSize] = useState(10);
