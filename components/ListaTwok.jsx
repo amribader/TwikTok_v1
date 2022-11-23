@@ -5,12 +5,14 @@ import { SingleTwokLoaderHelper } from './TwokLoaderHelper';
 import { SingleTwokHandler } from './TwokLoaderHelper';
 import { oneTwok } from './TwokLoaderHelper';
 
-const ListaTwok = ({ sid, tid, map, setMap, navigation }) => {
+const ListaTwok = ({ sid, tid, uid, map, setMap, navigation }) => {
     const [getData, setData] = useState([]);
     const [mapAut, SetmapAut] = useState(new Map());
+    
+    //UseEffect funzionante ma da risolvere il fatto che 
     useEffect(() => {
 
-        SingleTwokHandler(sid, tid, map)
+        SingleTwokHandler(sid, tid, uid, map)
             .then(result => {
                 setData(result)
                 console.log(result)
@@ -22,7 +24,7 @@ const ListaTwok = ({ sid, tid, map, setMap, navigation }) => {
         //console.log(item)
         <Twok
             item={item}
-            navigation = {navigation}
+            navigation={navigation}
             auts={mapAut}
             onLoadPicture={SetmapAut}
         />
@@ -30,13 +32,13 @@ const ListaTwok = ({ sid, tid, map, setMap, navigation }) => {
 
     const fun = () => (
         //risolvere il problema del tidSequenza per non dover ripartire da caspo ongi singola volta
-        oneTwok(sid, tid, map)
-        .then(result => {
-            console.log(result)
-            console.log(map)
-            setData(Array.from(map.values()))
-            return
-        })
+        oneTwok(sid, tid, uid, map)
+            .then(result => {
+                console.log(result)
+                console.log(map)
+                setData(Array.from(map.values()))
+                return
+            })
     );
 
     return (
@@ -49,7 +51,12 @@ const ListaTwok = ({ sid, tid, map, setMap, navigation }) => {
                 snapToInterval={Dimensions.get('window').height}
                 snapToAlignment="start"
                 decelerationRate="fast"
-                onScrollEndDrag={fun}
+                onEndReachedThreshold={0.5}
+                onEndReached={() => {
+                    // console.log("chiamo un nuovo Twok");
+                    fun();
+                }}
+                //onScrollEndDrag={fun}
             />
         </View>
     )

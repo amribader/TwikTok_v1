@@ -13,7 +13,7 @@ import { SidContext } from '../../App';
 • Bacheca dei twok. Una schermata mostra, uno per volta, i twok creati da altri utenti e 
 forniti dal server. L’utente può anche vedere l’autore del twok (immagine e nome)
 */
-
+/* TODO: CREARE MAPPA IMMAGINI PROFILO */
 const Bacheca = ({navigation}) => {
     //const sid = 'eWMFf6iZzJIizpmEbwqb'
     const sid = useContext(SidContext);
@@ -53,11 +53,6 @@ const Bacheca = ({navigation}) => {
                 )
 
             }
-            <Text>ciao</Text>
-            <Button
-                title="Go to Details"
-                //onPress={fun}
-            />
             </>
         </SafeAreaView>
     );

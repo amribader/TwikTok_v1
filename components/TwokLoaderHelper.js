@@ -23,7 +23,7 @@ const TwokLoaderHelper = async (sid, tidSequence) => {
 
 
 
-const SingleTwokLoaderHelper = async (sid, tidSequence) => {
+const SingleTwokLoaderHelper = async (sid, tidSequence, uid) => {
     let flag = true;
     //console.log({sid,tidSequence})
     //var tidSequence = 1;
@@ -31,7 +31,7 @@ const SingleTwokLoaderHelper = async (sid, tidSequence) => {
     const twoks = []
     while (flag) {
         //console.log("ciao")
-        const newTwok = await getTwok(sid, tidSequence)
+        const newTwok = await getTwok(sid, tidSequence, uid)
         //console.log(newTwok)
         //newTwok ? twoks.push(newTwok) : console.log(tidSequence,"vuoto")
         //Object.keys(newTwok).length === 0 ? tidSequence++ : twoks.push(newTwok)
@@ -46,7 +46,7 @@ const SingleTwokLoaderHelper = async (sid, tidSequence) => {
 
         tidSequence++;
 
-        if (twoks.length == 10) {
+        if (twoks.length == 2) {
             flag = false;
         }
     }
@@ -80,11 +80,11 @@ const TwokHandler = (sid, tidSequence) => {
 
 }
 /////////////////////////////////////////////////////
-const SingleTwokHandler = async (sid, tidSequence, map) => {
+const SingleTwokHandler = async (sid, tidSequence,uid, map) => {
 
     //const [map, setMap] = useState(null);
     let array = [];
-    await SingleTwokLoaderHelper(sid, tidSequence)
+    await SingleTwokLoaderHelper(sid, tidSequence,uid)
         .then(result => {
             array = result;
         })
@@ -101,11 +101,11 @@ const SingleTwokHandler = async (sid, tidSequence, map) => {
 
 }
 
-const oneTwok = async (sid, tidSequence, map) => {
+const oneTwok = async (sid, tidSequence,uid, map) => {
     let bool = true;
     let obj = {};
     while (bool) {
-        const newTwok = await getTwok(sid, tidSequence)
+        const newTwok = await getTwok(sid, tidSequence,uid)
         obj = newTwok;
         /* .then(result => {
             obj = result;

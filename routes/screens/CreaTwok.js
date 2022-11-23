@@ -64,6 +64,8 @@ const CreaTwok = ({ navigation }) => {
     { label: 'Destra', value: 'right' }
   ]);
 
+  /* TODO: NOME PIù BREVE DI 100 CARATTERI */
+
   ////////////////////////////////////////////////////////////////////////////////////////////////R
   const [fontVerticalOpen, fontVerticalSetOpen] = useState(false);
   const [fontVerticalValue, setFontVerticalValue] = useState('center');

@@ -5,6 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SidContext } from '../../App';
 import { isFollowed, follow, unfollow } from '../../components/CommunicationController';
+import ListaTwok from '../../components/ListaTwok';
+
 
 
 const BachecaUtente = ({ route, navigation }) => {
@@ -12,7 +14,8 @@ const BachecaUtente = ({ route, navigation }) => {
     const [isFollow, setFollow] = useState();
     const sid = useContext(SidContext);
     const { uid, name } = route.params;
-
+    const [map, SetMap] = useState(new Map());
+    
     useEffect(() => {
         isFollowed(sid, uid)
             .then(result => {
@@ -59,7 +62,7 @@ const BachecaUtente = ({ route, navigation }) => {
 
     console.log(route.params)
     return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.container}>
             <View>
                 <Text>NOME{name}</Text>
                 {
@@ -78,6 +81,14 @@ const BachecaUtente = ({ route, navigation }) => {
                     )
                 }
 
+                <View>
+                    <ListaTwok
+                        sid={sid}
+                        uid={uid}
+                        map={map}
+                        SetMap={SetMap}
+                    />
+                </View>
 
 
             </View>

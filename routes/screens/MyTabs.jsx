@@ -73,6 +73,16 @@ const MyTabs = () => {
                     ),
                 }}
             />
+            <Tab.Screen
+                name="Follower"
+                component={UtentiSeguiti}
+                options={{
+                    tabBarLabel: 'Follower',
+                    tabBarIcon: ({ color }) => (
+                        <MaterialCommunityIcons name="account-group" color={color} size={26} />
+                    ),
+                }}
+            />
         </Tab.Navigator>
         //<Stack.Screen name="UtentiSeguiti" component={UtentiSeguiti} />
         //</NavigationContainer>
