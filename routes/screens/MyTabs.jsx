@@ -7,7 +7,7 @@ import Bacheca from './Bacheca';
 import CreaTwok from './CreaTwok';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
-
+import TwokOnMap from './TwokOnMap'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Profilo from './Profilo';
 
@@ -50,6 +50,7 @@ const MyTabs = () => {
                         <SettingsStack.Screen name="Home" component={Bacheca} screenOptions={{
                 headerShown: false}} />
                         <SettingsStack.Screen name="BachecaUtente" component={BachecaUtente} />
+                        <SettingsStack.Screen name="TwokOnMap" component={TwokOnMap} />
                     </SettingsStack.Navigator>
                 )}
             </Tab.Screen>

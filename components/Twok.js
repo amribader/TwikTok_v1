@@ -84,6 +84,21 @@ const Twok = ({ item, auts, onLoadPicture, navigation }) => {
         style={styles.image}
       /></View> ) : (<><MaterialCommunityIcons name="account-circle" color={'black'} size={100} /></>)}
       </TouchableOpacity>
+
+        <View>
+          <TouchableOpacity
+          style={styles.button}
+          onPress = {() => navigation.navigate('TwokOnMap',{
+            uid : item.uid,
+            name: item.name,
+            lat: item.lat,
+            lon: item.lon,
+          })}
+          >
+            <MaterialCommunityIcons name="google-maps" color={'black'} size={100} />
+          </TouchableOpacity>
+        </View>
+
     </View>
   );
 }
