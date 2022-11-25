@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
 })
  
 */
-
+/*
 import React, { useState, useEffect } from 'react';
 import MapView, { Callout, Circle, Marker } from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions, Button, Alert } from 'react-native';
@@ -195,6 +195,17 @@ const TwokOnMap = ({ navigation, route }) => {
            
         </View>
     );
+}
+*/
+import { View, Text, Dimensions, StyleSheet } from 'react-native'
+import React from 'react'
+
+const TwokOnMap = () => {
+  return (
+    <View>
+      <Text>TwokOnMap</Text>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({

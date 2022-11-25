@@ -8,7 +8,7 @@ import { useCallback } from 'react';
 import { addTwok } from '../../components/CommunicationController';
 import { SidContext } from '../../App';
 
-
+import * as Location from 'expo-location';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -22,10 +22,13 @@ const CreaTwok = ({ navigation }) => {
     'DancingScript': require('../../assets/font/DancingScript-VariableFont_wght.ttf'),
   })
 
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
   const sid = useContext(SidContext);
 
   const [getText, setText] = useState('');
-  
+
   const [fontDimOpen, setFontDimOpen] = useState(false);
 
   //const [fontSize, setFontSize] = useState(10);
@@ -88,6 +91,9 @@ const CreaTwok = ({ navigation }) => {
   if (!fontsLoaded) {
     return null;
   }
+
+
+
   const renderColor = (set) => {
     return backgroundColors.map(color => {
       return (
@@ -104,24 +110,62 @@ const CreaTwok = ({ navigation }) => {
     })
   }
 
+  const getMyPosition = async () => {
+
+
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      setErrorMsg('Permission to access location was denied');
+      return;
+    }
+
+    /*     let canUseLocation = false;
+        const grantedPermission = await Location.getForegroundPermissionsAsync()
+        if (grantedPermission.status === "granted") {
+          canUseLocation = true;
+        } else {
+          const permissionResponse = await Location.requestForegroundPermissionsAsync()
+          if (permissionResponse.status === "granted") {
+            canUseLocation = true;
+          }
+        }
+    
+        if (canUseLocation) {
+          const location = await Location.getCurrentPositionAsync()
+          console.log("received location:", location);
+    
+        } */
+    //use the location now
+
+    let location = await Location.getCurrentPositionAsync({});
+    setLocation(location);
+    console.log("received location:", location);
+  }
+
+
+
 
 
   const handleCreateTwok = () => {
     const text = getText;
     const bgcol = color.substring(1);
     const fontcol = fontColor.substring(1);
-    fontDimValue == 18 ? fontsize = 0 : (fontDimValue == 30 ? fontsize = 1 :  fontsize = 2)
+    fontDimValue == 18 ? fontsize = 0 : (fontDimValue == 30 ? fontsize = 1 : fontsize = 2)
     //const fonttype = fontTypeValue;
-    fontTypeValue == 'BhuTukaExpandedOne' ? fonttype = 0 : (fontTypeValue == 'DancingScript' ? fonttype = 1 :  fonttype = 2)
+    fontTypeValue == 'BhuTukaExpandedOne' ? fonttype = 0 : (fontTypeValue == 'DancingScript' ? fonttype = 1 : fonttype = 2)
     //const halign = fontHorizontalValue;
-    fontHorizontalValue == 'left' ? halign = 0 : (fontHorizontalValue == 'center' ? halign = 1 :  halign = 2)
+    fontHorizontalValue == 'left' ? halign = 0 : (fontHorizontalValue == 'center' ? halign = 1 : halign = 2)
     //const valign = fontVerticalValue;
-    fontVerticalValue == 'left' ? valign = 0 : (fontVerticalValue == 'center' ? valign = 1 :  valign = 2)
+    fontVerticalValue == 'left' ? valign = 0 : (fontVerticalValue == 'center' ? valign = 1 : valign = 2)
 
-    const lat = '';
-    const lon = '';
+    console.log("LOCATION", location)
 
-    console.log({sid,
+    location ? (location.coords.latitude ? lat = '41.934977' : lat = '') :  lat = '';
+    location ? (location.coords.longitude ? lon = '41.934977' : lon = '') :  lon = '';
+    //location.coords.longitude ? lon = '-82.539532' : lon = '';
+
+    console.log({
+      sid,
       text,
       bgcol,
       fontcol,
@@ -130,44 +174,55 @@ const CreaTwok = ({ navigation }) => {
       halign,
       valign,
       lat,
-      lon}) 
-     addTwok(sid,
+      lon
+    })
+    addTwok(sid,
       text,
       bgcol,
       fontcol,
       fontsize,
       fonttype,
       halign,
-      valign)
-    .then((result) => {
-      console.log(result)
-      Alert.alert(
-        'Twok creato con successo!!',
-        'Tornare alla Bacheca??',
-        [
-          {
-            text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
-            style: "cancel"
-        },
-        { text: "OK", onPress: () => navigation.navigate('Bacheca') }
-      ]
-    );
-      
-    });  
-/*
-    sid: sid,
-        text: text,
-        bgcol: bgcol,
-        fontcol: fontcol,
-        fontsize: fontsize,
-        fonttype: fonttype,
-        halign: halign,
-        valign: valign,
-        lat: lat,
-        lon: lon,
-        */
+      valign,
+      lat,
+      lon)
+      .then((result) => {
+        console.log(result)
+        Alert.alert(
+          'Twok creato con successo!!',
+          'Tornare alla Bacheca??',
+          [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: "cancel"
+            },
+            { text: "OK", onPress: () => {navigation.navigate('Bacheca'),setLocation(null)} }
+          ]
+        );
+
+      });
+    /*
+        sid: sid,
+            text: text,
+            bgcol: bgcol,
+            fontcol: fontcol,
+            fontsize: fontsize,
+            fonttype: fonttype,
+            halign: halign,
+            valign: valign,
+            lat: lat,
+            lon: lon,
+            */
   };
+
+
+
+
+
+
+
+
   return (
     //<KeyboardAvoidingView style={styles.container} behavior="padding">
     //<ScrollView>
@@ -349,7 +404,17 @@ const CreaTwok = ({ navigation }) => {
           <Text style={{ color: 'white', fontWeight: '600' }}>Create!</Text>
         </TouchableOpacity>
 
+        <Button
+          onPress={getMyPosition}
+          title="Learn More"
+          color="#841584"
+          accessibilityLabel="GET MY POSITION"
+        />
+
+
       </ScrollView>
+
+
 
     </KeyboardAvoidingView>
 

@@ -16,7 +16,7 @@ const Twok = ({ item, auts, onLoadPicture, navigation }) => {
   })
 
   const [state, setstate] = useState();
-
+  /* TODO: NIENTE SIMBONO MAPPA SE NON CE EFFETTIVAMENTE */
   useEffect(() => {
     getPicture(sid, item.uid)
       .then(result => { setstate(result.picture) })
@@ -48,6 +48,7 @@ const Twok = ({ item, auts, onLoadPicture, navigation }) => {
   //console.log(item)
   const textAlignmentsVertical = ["flex-start", "center", "flex-end"];
   const textAlignments = ["left", "center", "right"];
+  //const textAlignments = ["flex-start", "center", "flex-end"]
   const fontWeights = [18, 30, 44];
   const fontType = ['BhuTukaExpandedOne', 'DancingScript', 'Anton-Regular']
   return (
@@ -67,37 +68,44 @@ const Twok = ({ item, auts, onLoadPicture, navigation }) => {
           textAlign: textAlignments[item.halign],
           color: `#${item.fontcol}`
         }}>{item.text}</Text>
-<TouchableOpacity
+      <TouchableOpacity
         style={styles.button}
-        onPress = {() => navigation.navigate('BachecaUtente',{
-          uid : item.uid,
+        onPress={() => navigation.navigate('BachecaUtente', {
+          uid: item.uid,
           name: item.name
         })}
       >
-      {state ? (<View style={[
-        {
-          justifyContent: textAlignmentsVertical[item.valign],
-          alignItems: textAlignments[item.halign]
-        }]}><Image
-        source={{ uri: "data:image/png;base64," + state }}
-        /* style={{ width: 200, height: 200 }} */
-        style={styles.image}
-      /></View> ) : (<><MaterialCommunityIcons name="account-circle" color={'black'} size={100} /></>)}
+        {state ? (<View style={[
+          {
+            justifyContent: textAlignmentsVertical[item.valign],
+            //alignItems: textAlignments[item.halign]
+          }]}><Image
+            source={{ uri: "data:image/png;base64," + state }}
+            /* style={{ width: 200, height: 200 }} */
+            style={styles.image}
+          /></View>) : (<><MaterialCommunityIcons name="account-circle" color={'black'} size={100} /></>)}
       </TouchableOpacity>
 
-        <View>
+      {
+        item.lat ? (<View>
           <TouchableOpacity
-          style={styles.button}
-          onPress = {() => navigation.navigate('TwokOnMap',{
-            uid : item.uid,
-            name: item.name,
-            lat: item.lat,
-            lon: item.lon,
-          })}
+            style={styles.button}
+            onPress={() => navigation.navigate('TwokOnMap', {
+              uid: item.uid,
+              name: item.name,
+              lat: item.lat,
+              lon: item.lon,
+            })}
           >
             <MaterialCommunityIcons name="google-maps" color={'black'} size={100} />
           </TouchableOpacity>
-        </View>
+        </View>) : (
+    <></>
+  )
+
+
+      }
+
 
     </View>
   );
@@ -114,9 +122,9 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 100,
-    height: 50, 
+    height: 50,
     resizeMode: 'contain',
-},
+  },
 });
 
 export default Twok;

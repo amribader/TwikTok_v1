@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, StyleSheet, Text, SafeAreaView, KeyboardAvoidingView, TextInput, Button, Image } from 'react-native';
+import { View, StyleSheet, Text, SafeAreaView, KeyboardAvoidingView, TextInput, Button, Image, Alert } from 'react-native';
 import { SidContext } from '../../App';
 import { getProfile, setProfile } from '../../components/CommunicationController'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -40,16 +40,36 @@ const Profilo = () => {
         //console.log(result);
 
         if (!result.canceled) {
+
+            if(result.assets[0].base64.length >= 137000){
+                console.log('ERRORE Image TROPPO GRANDE')
+
+                Alert.alert(
+                    'ATTENZIONE IMMAGINE TROPPO GRANDE!!',
+                    'IMMAGINE DEVE ESSERE < 100KB??',
+                    [
+                      {
+                        text: 'Cancel',
+                        onPress: () => console.log('Cancel Pressed'),
+                        style: "cancel"
+                      },
+                      { text: "OK", onPress: () => console.log('ok Pressed') }
+                    ]
+                  );
+
+                return
+            }
             setImage(result.assets[0].base64);
             setPicture(result.assets[0].base64)
-            //console.log(result.assets[0].uri)
+            ////console.log(result.assets[0].uri)
             //chiamata server salva immagine
-            //console.log(picture)
+            ////console.log(picture)
             //let str = result.assets[0].uri.substring(22)
-            await changePicture(result.assets[0].base64)
-            //console.log(result.assets[0].base64)
+            //await changePicture(result.assets[0].base64)
+            changePicture(result.assets[0].base64)
+            ////console.log(result.assets[0].base64)
             //setImage(result.uri);
-            //console.log(str)
+            ////console.log(str)
             //setImage(str)
             //setPicture(str)
         }
@@ -76,30 +96,30 @@ const Profilo = () => {
     const onLoad = () => {
         getProfile(sid)
             .then(result => {
-                //console.log(result);
+                ////console.log(result);
                 setName(result.name);
                 setPicture(result.picture);
             })
     }
 
     const changeName = () => {
-        //console.log(params)
-        //console.log(sid)
+        ////console.log(params)
+        ////console.log(sid)
 
         setProfile(sid, name)
             .then(result => {
-                console.log(result)
+                ////console.log(result)
             })
     }
 
-    const changePicture = async (params) => {
-        //console.log(params)
+    const changePicture = (params) => {//async
+        ////console.log(params)
         /* 
-                console.log(params)
-                console.log(params.substring(23))
+                //console.log(params)
+                //console.log(params.substring(23))
                 let str = params.substring(23)
-                console.log(sid) */
-        console.log("PARAMS:",params)
+                //console.log(sid) */
+        //console.log("PARAMS:",params)
         setProfile(sid, name, params)
             .then(result => {
                 console.log(result)
