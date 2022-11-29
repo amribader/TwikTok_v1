@@ -1,12 +1,11 @@
 import React, { Component, useContext, useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity, Platform } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback } from 'react';
 import { getPicture } from './CommunicationController';
 import { SidContext } from '../App';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import * as SQLite from "expo-sqlite";
 
 const Twok = ({ item, auts, onLoadPicture, navigation }) => {
   const sid = useContext(SidContext);
@@ -17,58 +16,6 @@ const Twok = ({ item, auts, onLoadPicture, navigation }) => {
   })
 
   const [state, setstate] = useState();
-
-
-
-  function openDatabase() {
-    if (Platform.OS === "web") {
-      return {
-        transaction: () => {
-          return {
-            executeSql: () => { },
-          };
-        },
-      };
-    }
-
-    const db = SQLite.openDatabase("db.db");
-    return db;
-  }
-
-  const db = openDatabase();
- /*
-  useEffect(() => {
-    console.log('Use effect')
-    //SELECT name FROM sqlite_master WHERE type='table' AND name='getPicture';
-    //create table if not exists getPicture (uid integer primary key not null, nome string, pversion int, picture base64);"
-    db.transaction((tx) => {
-      tx.executeSql(
-        "SELECT name FROM sqlite_master WHERE type='table' AND name='getPicture';", [],
-        (tx, result) => { console.log(JSON.stringify(result.rows)) },
-        (tx, error) => { console.log("ciao"+error) }
-      );
-    });
-
-  }, []);
-*/
-
-  useEffect(() => {
-    fetchData()
-  }, []);
- 
-   const fetchData = () => {
-    db.transaction(tx => {
-      // sending 4 arguments in executeSql
-      tx.executeSql("SELECT name FROM sqlite_master WHERE type='table' ", null, // passing sql query and parameters:null
-        // success callback which sends two things Transaction object and ResultSet Object
-        //(txObj, { rows: { _array } }) => console.log({ data: _array }), 
-        (tx, result) => { console.log(JSON.stringify(result.rows)) },
-        // failure callback which sends two things Transaction object and Error
-        (txObj, error) => console.log('Error ', error)
-        ) // end executeSQL
-    }) // end transaction
-  }
-
   /* TODO: NIENTE SIMBONO MAPPA SE NON CE EFFETTIVAMENTE */
   useEffect(() => {
     getPicture(sid, item.uid)
@@ -96,23 +43,7 @@ const Twok = ({ item, auts, onLoadPicture, navigation }) => {
     return null;
   }
 
-  const add = (text) => {
-    // is text empty?
-    if (text === null || text === "") {
-      return false;
-    }
 
-    db.transaction(
-      (tx) => {
-        tx.executeSql("insert into items (done, value) values (0, ?)", [text]);
-        tx.executeSql("select * from items", [], (_, { rows }) =>
-          console.log(JSON.stringify(rows))
-        );
-      },
-      null,
-      forceUpdate
-    );
-  };
 
   //console.log(item)
   const textAlignmentsVertical = ["flex-start", "center", "flex-end"];
@@ -169,8 +100,8 @@ const Twok = ({ item, auts, onLoadPicture, navigation }) => {
             <MaterialCommunityIcons name="google-maps" color={'black'} size={100} />
           </TouchableOpacity>
         </View>) : (
-          <></>
-        )
+    <></>
+  )
 
 
       }

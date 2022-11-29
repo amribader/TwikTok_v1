@@ -8,12 +8,13 @@ import { SidContext } from '../../App';
 
 
 const UtentiSeguiti = ({ navigation }) => {
-    const [follow, setFollow] = useState([])
+    const [follow, setFollow] = useState()
     const sid = useContext(SidContext);
     //const sid = 'SjNbAP37WQ8SkYhchzL8'
 
     useFocusEffect(
         React.useCallback(() => {
+            console.log('onFocus')
             //alert('Screen was focused');
             onLoad()
             // Do something when the screen is focused
@@ -26,20 +27,27 @@ const UtentiSeguiti = ({ navigation }) => {
     );
      
         useEffect(() => {
+            console.log('effect')
+            //onLoad()
             //sid ? onLoad() : ''
-            follow.length ? console.log('ramo 1') : alert();
-        }, [follow]);
+            //follow ? console.log('ramo 1') : alert();
+        }, []);
     
     const onLoad = () => {
         console.log(sid)
         getFollowed(sid)
-            .then(result => setFollow(result))
+            .then(result => {
+                setFollow(result)
+                result ? console.log('ramo 1') : alert();
+            return 
+        })
 
     }
 
 
 
     const alert = () => {
+        console.log("FOLLOW",follow)
         Alert.alert(
             'NON SEGUI NESSUNO!!',
             'Tornare alla Bacheca??',
