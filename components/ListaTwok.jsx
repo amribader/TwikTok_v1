@@ -11,7 +11,7 @@ const ListaTwok = ({ sid, tid, uid, map, setMap, navigation }) => {
     const [mapAut, SetmapAut] = useState(new Map());
 
     //UseEffect funzionante ma da risolvere il fatto che 
-    useEffect(() => {
+    /* useEffect(() => {
 
         SingleTwokHandler(sid, tid, uid, map)
             .then(result => {
@@ -19,6 +19,11 @@ const ListaTwok = ({ sid, tid, uid, map, setMap, navigation }) => {
                 console.log(result)
                 return
             })
+    }, []);//array delle dipendenze */
+
+    useEffect(() => {
+
+        fun()
     }, []);//array delle dipendenze
 
     const renderItem = ({ item }) => (
