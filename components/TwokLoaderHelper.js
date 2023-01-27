@@ -115,32 +115,32 @@ const oneTwok = async (sid, tidSequence,uid, map) => {
             obj = result;
         }) */
         if (Object.keys(newTwok).length === 0) {
-            console.log("ramo if")
+            //console.log("ramo if")
             tidSequence++;
 
         } else {
             console.log("OBJ:", obj)
             if (checkInMap(obj, map)) {
-                console.log("ramo if")
+                //console.log("ramo if")
                 tidSequence++;
             } else {
-                console.log("ramo else")
+                //console.log("ramo else")
                 bool = false;
             }
         }
 
     }
-    console.log("----->", obj)
+    //console.log("----->", obj)
     map.set(obj.tid, obj);
-    console.log("MAPPA COMPLETA->", map)
+    //console.log("MAPPA COMPLETA->", map)
     return
 
 }
 
 const checkInMap = (obj, map) => {
-    console.log("MAP->", map)
-    console.log("OGGETTO->", obj)
-    console.log("boolean_>", map.has(obj.tid))
+    //console.log("MAP->", map)
+    //console.log("OGGETTO->", obj)
+    //console.log("boolean_>", map.has(obj.tid))
     return map.has(obj.tid)
 }
 

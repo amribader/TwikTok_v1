@@ -41,8 +41,8 @@ const ListaTwok = ({ sid, tid, uid, map, setMap, navigation }) => {
 
         oneTwok(sid, tid, uid, map)
             .then(result => {
-                console.log(result)
-                console.log(map)
+                //console.log(result)
+                //console.log(map)
                 setData(Array.from(map.values()))
                 return
             })
@@ -68,11 +68,11 @@ const ListaTwok = ({ sid, tid, uid, map, setMap, navigation }) => {
                 snapToAlignment="start"
                 decelerationRate="fast"
                 onEndReachedThreshold={0.5}
-                //onEndReached={() => {
+                onEndReached={() => {
                 // console.log("chiamo un nuovo Twok");
-                //    fun();
-                //}}
-                onScrollEndDrag={fun}
+                    fun();
+                }}
+                //onScrollEndDrag={fun}
             />
         </View>
     )

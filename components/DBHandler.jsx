@@ -1,7 +1,7 @@
 import { openDatabase } from "expo-sqlite";
 
 // Create a new SQLite database
-const db = openDatabase("users.db");
+const db = openDatabase("db.db");
 
 // Create a table for managing users
 const createTable = () => {
@@ -24,11 +24,15 @@ const createTable = () => {
 };
 
 // Insert a new user into the database
-const insertUser = (uid, picture, pversion) => {
+const insertUser = (uid, picture, pversion, name) => {
+    console.log(uid, pversion, name)
+    //console.log(picture)
     db.transaction((tx) => {
         tx.executeSql(
-            "insert into users (uid, picture, pversion) values (?, ?, ?)",
-            [uid, picture, pversion],
+            "insert or replace into DBprova2 (uid , nome, pversion , picture) values (?,?,?,?)",
+             [uid, name, pversion, picture],
+            //"insert into DBprova2 (uid, picture, pversion, name) values (?, ?, ?, ?)",
+            //[uid, picture, pversion, name],
             () => {
                 console.log("User inserted successfully");
             },
@@ -44,10 +48,11 @@ const getUser = (uid) => {
     return new Promise((resolve, reject) => {
         db.transaction((tx) => {
             tx.executeSql(
-                "select * from users where uid = ?",
+                "select * from DBprova2 where uid= ?",
                 [uid],
                 (_, { rows }) => {
-                    resolve(rows._array[0] || null);
+                    //console.log("rows:",rows)
+                    resolve(rows)//._array[0] || null);
                 },
                 (error) => {
                     reject(error);

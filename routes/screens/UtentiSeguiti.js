@@ -8,7 +8,7 @@ import { SidContext } from '../../App';
 
 
 const UtentiSeguiti = ({ navigation }) => {
-    const [follow, setFollow] = useState()
+    const [follow, setFollow] = useState(false)
     const sid = useContext(SidContext);
     //const sid = 'SjNbAP37WQ8SkYhchzL8'
 
@@ -38,7 +38,8 @@ const UtentiSeguiti = ({ navigation }) => {
         getFollowed(sid)
             .then(result => {
                 setFollow(result)
-                result ? console.log('ramo 1') : alert();
+                console.log(result)
+                result.length ? console.log('ramo 1') : alert();
             return 
         })
 
@@ -73,6 +74,9 @@ const UtentiSeguiti = ({ navigation }) => {
                     name: item.name
                 })}
             >
+
+                
+
                 <Text>
                     {item.uid}
                     {item.name}
@@ -86,7 +90,7 @@ const UtentiSeguiti = ({ navigation }) => {
         <View>
 
             {
-                follow ? (
+                follow.length ? (
                     <View>
                         <FlatList
                             data={follow}

@@ -16,13 +16,35 @@ const BachecaUtente = ({ route, navigation }) => {
     const { uid, name } = route.params;
     const [map, SetMap] = useState(new Map());
     
+    /* useFocusEffect(
+        React.useCallback(() => {
+            console.log('onFocus')
+            //alert('Screen was focused');
+            onLoad()
+            // Do something when the screen is focused
+            return () => {
+                //alert('Screen was unfocused');
+                // Do something when the screen is unfocused
+                // Useful for cleanup functions
+            };
+        }, [])
+    ); */
+
+    /* useEffect(() => {
+        isFollowed(sid, uid)
+            .then(result => {
+                console.log(result)
+                setFollow(result.followed)
+            })
+    }, []); */
+
     useEffect(() => {
         isFollowed(sid, uid)
             .then(result => {
                 console.log(result)
                 setFollow(result.followed)
             })
-    }, []);
+    }, [route]);
 
     const check = () => {
         isFollowed(sid, uid)
