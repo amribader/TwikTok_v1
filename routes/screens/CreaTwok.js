@@ -80,7 +80,7 @@ const CreaTwok = ({ navigation }) => {
 
   const backgroundColors = ['#000000', '#888888', '#ed1c24', '#d11cd5', '#1633e6', '#00aeef', '#00c85d', '#57ff0a', '#ffde17', '#f26522'];
   const [color, setColor] = useState(backgroundColors[0]);
-  const [fontColor, setFontColor] = useState(backgroundColors[0]);
+  const [fontColor, setFontColor] = useState(backgroundColors[4]);
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {

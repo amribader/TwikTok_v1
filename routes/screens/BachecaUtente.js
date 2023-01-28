@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, Text, SafeAreaView, TouchableOpacity } from 'react-native';
 
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SidContext } from '../../App';
 import { isFollowed, follow, unfollow } from '../../components/CommunicationController';
@@ -15,20 +15,33 @@ const BachecaUtente = ({ route, navigation }) => {
     const sid = useContext(SidContext);
     const { uid, name } = route.params;
     const [map, SetMap] = useState(new Map());
-    
-    /* useFocusEffect(
+
+
+    const [bool, setBol] = useState(false);
+
+    useFocusEffect(
         React.useCallback(() => {
-            console.log('onFocus')
-            //alert('Screen was focused');
-            onLoad()
+
+            /* isFollowed(sid, uid)
+                .then(result => {
+                    console.log(result)
+                    setFollow(result.followed)
+                }) */
+                setBol(true)
+            alert('Screen was focused');
+
             // Do something when the screen is focused
             return () => {
-                //alert('Screen was unfocused');
+                alert('Screen was unfocused');
+                route = null
+                map.clear();
+                setBol(false)
+                //SetMap(new Map())
                 // Do something when the screen is unfocused
                 // Useful for cleanup functions
             };
         }, [])
-    ); */
+    );
 
     /* useEffect(() => {
         isFollowed(sid, uid)
@@ -44,7 +57,7 @@ const BachecaUtente = ({ route, navigation }) => {
                 console.log(result)
                 setFollow(result.followed)
             })
-    }, [route]);
+    }, [route, navigation]);
 
     const check = () => {
         isFollowed(sid, uid)
@@ -103,18 +116,27 @@ const BachecaUtente = ({ route, navigation }) => {
                     )
                 }
 
-                <View>
-                    <ListaTwok
-                        sid={sid}
-                        uid={uid}
-                        map={map}
-                        SetMap={SetMap}
-                    />
-                </View>
+                {
+                    bool ? (
+                        <View>
+                            <ListaTwok
+                                sid={sid}
+                                uid={uid}
+                                map={map}
+                                SetMap={SetMap}
+                            />
+                        </View>
+                    ) : (
+                        <>
+                        <Text>LOADING...</Text>
+                        </>
+                    )
+                }
+
 
 
             </View>
-        </SafeAreaView>
+        </SafeAreaView >
 
     );
 }

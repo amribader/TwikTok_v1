@@ -5,6 +5,7 @@ import { SingleTwokLoaderHelper } from './TwokLoaderHelper';
 import { SingleTwokHandler } from './TwokLoaderHelper';
 import { oneTwok } from './TwokLoaderHelper';
 import { getTwok } from './CommunicationController';
+import { useFocusEffect } from '@react-navigation/native';
 
 const ListaTwok = ({ sid, tid, uid, map, setMap, navigation }) => {
     const [getData, setData] = useState([]);
@@ -21,10 +22,26 @@ const ListaTwok = ({ sid, tid, uid, map, setMap, navigation }) => {
             })
     }, []);//array delle dipendenze */
 
+    useFocusEffect(
+        React.useCallback(() => {
+            
+            //alert('Screen was focused');
+            
+            // Do something when the screen is focused
+            return () => {
+                //alert('Screen was unfocused');
+                map.clear();
+                //SetMap(new Map())
+                // Do something when the screen is unfocused
+                // Useful for cleanup functions
+            };
+        }, [])
+    );
+
     useEffect(() => {
 
         fun()
-    }, []);//array delle dipendenze
+    }, [navigation]);//array delle dipendenze
 
     const renderItem = ({ item }) => (
         //console.log(item)

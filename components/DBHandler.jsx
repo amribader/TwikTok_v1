@@ -96,14 +96,14 @@ const getAllUsers = () => {
     });
 };
 
-// Update an existing user
+// Update an existing user, // Update the user's picture and pversion in the database
 const updateUser = (uid, picture, pversion) => {
     db.transaction((tx) => {
         tx.executeSql(
-            "update users set picture = ?, pversion = ? where uid = ?",
+            "update DBprova2 set picture = ?, pversion = ? where uid = ?",
             [picture, pversion, uid],
             () => {
-                console.log("User updated successfully");
+                console.log("User (picture and pversion) updated successfully");
             },
             (error) => {
                 console.error("Error updated user", error);
@@ -111,6 +111,64 @@ const updateUser = (uid, picture, pversion) => {
         );
     });
 };
+
+
+
+// Update an existing user
+const updateUserPversion = (uid, picture, pversion) => {
+    db.transaction((tx) => {
+    tx.executeSql(
+     "update users set picture = ?, pversion = ? where uid = ?",
+     [picture, pversion, uid],
+     () => {
+       console.log("User updated successfully");
+     },
+     (error) => {
+       console.error("Error updating user", error);
+     }
+    );
+    });
+    };
+    
+    // Update the picture of a user if the pversion is lower
+    const updatePicture = async (uid, pversion, picture) => {
+    try {
+    // Get the user from the database
+    const user = await getUser(uid);
+    if (!user) {
+     throw new Error("User not found");
+    }
+    
+    // Compare the provided pversion to the user's current pversion
+    if (pversion <= user.pversion) {
+     console.log("User picture is up to date");
+     return;
+    }
+    
+    // Update the user's picture and pversion in the database
+    db.transaction((tx) => {
+     tx.executeSql(
+       "update users set picture = ?, pversion = ? where uid = ?",
+       [picture, pversion, uid],
+       (_, result) => {
+         console.log("User picture and pversion updated successfully", result);
+       },
+       (error) => {
+         throw error;
+       }
+     );
+    });
+    } catch (error) {
+    console.error("Error updating user picture", error);
+    }
+    };
+    /* const db = SQLite.openDatabase("myDB");
+    const query = "CREATE TABLE IF NOT EXISTS PROVA (value TEXT NOT NULL);";
+    db.transaction(tx => {
+    tx.executeSql(query);
+    });
+    console.log("NOME DB => ",db); */
+
 
 export {
     createTable,

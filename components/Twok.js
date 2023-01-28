@@ -21,6 +21,7 @@ import * as SQLite from "expo-sqlite";
 
 import * as Sharing from 'expo-sharing';
 import * as FileSystem from 'expo-file-system';
+import { useFocusEffect } from '@react-navigation/native';
 function openDatabase() {
   const db = SQLite.openDatabase("db.db");
   return db;
@@ -38,6 +39,26 @@ const Twok = ({ item, auts, onLoadPicture, navigation }) => {
   const [selectDB, setSelectDB] = useState();
 
   const db = openDatabase();
+
+  useFocusEffect(
+    React.useCallback(() => {
+        
+        //alert('Screen was focused');
+        
+        // Do something when the screen is focused
+        return () => {
+            //alert('Screen was unfocused');
+            
+            setstate(null)
+            setPic(null)
+            // Do something when the screen is unfocused
+            // Useful for cleanup functions
+        };
+    }, [])
+);
+
+
+
 
   useEffect(() => {
     console.log(item.pversion)

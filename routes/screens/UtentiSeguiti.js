@@ -5,6 +5,7 @@ import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { getFollowed } from '../../components/CommunicationController';
 import { SidContext } from '../../App';
+import SingleUserRow from './singleUserRow';
 
 
 const UtentiSeguiti = ({ navigation }) => {
@@ -16,7 +17,7 @@ const UtentiSeguiti = ({ navigation }) => {
         React.useCallback(() => {
             console.log('onFocus')
             //alert('Screen was focused');
-            onLoad()
+            //onLoad()
             // Do something when the screen is focused
             return () => {
                 //alert('Screen was unfocused');
@@ -25,14 +26,14 @@ const UtentiSeguiti = ({ navigation }) => {
             };
         }, [])
     );
-     
-        useEffect(() => {
-            console.log('effect')
-            //onLoad()
-            //sid ? onLoad() : ''
-            //follow ? console.log('ramo 1') : alert();
-        }, []);
-    
+
+    useEffect(() => {
+        console.log('effect')
+        onLoad()
+        //sid ? onLoad() : ''
+        //follow ? console.log('ramo 1') : alert();
+    }, []);
+
     const onLoad = () => {
         console.log(sid)
         getFollowed(sid)
@@ -40,15 +41,15 @@ const UtentiSeguiti = ({ navigation }) => {
                 setFollow(result)
                 console.log(result)
                 result.length ? console.log('ramo 1') : alert();
-            return 
-        })
+                return
+            })
 
     }
 
 
 
     const alert = () => {
-        console.log("FOLLOW",follow)
+        console.log("FOLLOW", follow)
         Alert.alert(
             'NON SEGUI NESSUNO!!',
             'Tornare alla Bacheca??',
@@ -66,7 +67,14 @@ const UtentiSeguiti = ({ navigation }) => {
 
     const renderItem = ({ item }) => (
         //console.log(item)
-        <View style={styles.card}>
+        <View>
+            <SingleUserRow
+                item = {item} 
+                navigation = {navigation}
+            />
+        </View>
+        
+        /* {/* <View style={styles.card}>
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => navigation.navigate('BachecaUtente', {
@@ -83,7 +91,7 @@ const UtentiSeguiti = ({ navigation }) => {
                     {item.pversion}
                 </Text>
             </TouchableOpacity>
-        </View>
+        </View> }*/
     );
 
     return (
