@@ -124,6 +124,7 @@ const BachecaUtente = ({ route, navigation }) => {
                                 uid={uid}
                                 map={map}
                                 SetMap={SetMap}
+                                navigation={navigation}
                             />
                         </View>
                     ) : (

@@ -37,7 +37,8 @@
     "react-native-wheel-color-picker": "^1.2.0",
     "expo-sharing": "~11.0.1",
     "expo-file-system": "~15.1.1",
-    "expo-asset": "~8.7.0"
+    "expo-asset": "~8.7.0",
+    "@react-native-community/netinfo": "9.3.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

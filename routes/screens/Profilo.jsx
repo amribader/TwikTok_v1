@@ -5,8 +5,12 @@ import { getProfile, setProfile } from '../../components/CommunicationController
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
+import CheckInternet from "../../components/CheckInternet";
 
 const Profilo = () => {
+    //use state for connection
+    const [isConnected, setIsConnected] = useState(false)
+
     const [picture, setPicture] = useState()
     const [name, setName] = useState('')
 
@@ -109,7 +113,11 @@ const Profilo = () => {
         setProfile(sid, name)
             .then(result => {
                 ////console.log(result)
-            })
+                console.log("nome cambiato con successo")
+                alert("nome cambiato con successo");
+            }).catch(error => {
+            alert("errore nell cambio nome")
+        })
     }
 
     const changePicture = (params) => {//async
@@ -123,7 +131,10 @@ const Profilo = () => {
         setProfile(sid, name, params)
             .then(result => {
                 console.log(result)
-            })
+                alert("immagine cambiato con successo")
+            }).catch(error => {
+            alert("errore nell cambio immagine")
+        })
     }
 
     return (
@@ -176,6 +187,11 @@ const Profilo = () => {
                 <Button title="Pick an image from camera roll" onPress={pickImage} />
                 {image && <Image source={{ uri: "data:image/png;base64,"+ image }} style={{ width: 200, height: 200 }} />}
             </View>
+
+            <CheckInternet
+                isConnected={isConnected}
+                setIsConnected={setIsConnected}
+            />
         </SafeAreaView>
     );
 }

@@ -6,10 +6,15 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { getFollowed } from '../../components/CommunicationController';
 import { SidContext } from '../../App';
 import SingleUserRow from './singleUserRow';
+import CheckInternet from "../../components/CheckInternet";
 
 
 const UtentiSeguiti = ({ navigation }) => {
+    const [isConnected, setIsConnected] = useState(false)
+
+
     const [follow, setFollow] = useState(false)
+
     const sid = useContext(SidContext);
     //const sid = 'SjNbAP37WQ8SkYhchzL8'
 
@@ -42,7 +47,10 @@ const UtentiSeguiti = ({ navigation }) => {
                 console.log(result)
                 result.length ? console.log('ramo 1') : alert();
                 return
-            })
+            }).catch(error => {
+                console.log("errore getFollowed US")
+            alert("errore getFollowed US")
+        })
 
     }
 
@@ -111,7 +119,10 @@ const UtentiSeguiti = ({ navigation }) => {
                         <ActivityIndicator />
                     </View>)
             }
-
+            <CheckInternet
+                isConnected={isConnected}
+                setIsConnected={setIsConnected}
+            />
         </View>
     );
 }

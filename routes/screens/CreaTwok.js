@@ -12,6 +12,7 @@ import * as Location from 'expo-location';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import CheckInternet from "../../components/CheckInternet";
 
 
 const CreaTwok = ({ navigation }) => {
@@ -21,6 +22,10 @@ const CreaTwok = ({ navigation }) => {
     'BhuTukaExpandedOne': require('../../assets/font/BhuTukaExpandedOne-Regular.ttf'),
     'DancingScript': require('../../assets/font/DancingScript-VariableFont_wght.ttf'),
   })
+
+  //use state for connention
+  const [isConnected, setIsConnected] = useState(false);
+
 
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -103,7 +108,6 @@ const CreaTwok = ({ navigation }) => {
           onPress={() => {
             console.log(color)
             set(color)
-            return
           }}
         />
       )
@@ -137,9 +141,14 @@ const CreaTwok = ({ navigation }) => {
         } */
     //use the location now
 
-    let location = await Location.getCurrentPositionAsync({});
+    let location = await Location.getCurrentPositionAsync({}).catch(errorMsg => {
+      console.log("Errore Location"+errorMsg)
+      alert("Errore posizione non ottenuta")
+    });
     setLocation(location);
     console.log("received location:", location);
+
+    alert("Location ottenuta correttamente")
   }
 
 
@@ -150,19 +159,24 @@ const CreaTwok = ({ navigation }) => {
     const text = getText;
     const bgcol = color.substring(1);
     const fontcol = fontColor.substring(1);
-    fontDimValue == 18 ? fontsize = 0 : (fontDimValue == 30 ? fontsize = 1 : fontsize = 2)
+    let fontsize;
+    let fonttype;
+    let halign;
+    let valign;
+    fontDimValue === 18 ? fontsize = 0 : (fontDimValue === 30 ? fontsize = 1 : fontsize = 2)
     //const fonttype = fontTypeValue;
-    fontTypeValue == 'BhuTukaExpandedOne' ? fonttype = 0 : (fontTypeValue == 'DancingScript' ? fonttype = 1 : fonttype = 2)
+    fontTypeValue === 'BhuTukaExpandedOne' ? fonttype = 0 : (fontTypeValue === 'DancingScript' ? fonttype = 1 : fonttype = 2)
     //const halign = fontHorizontalValue;
-    fontHorizontalValue == 'left' ? halign = 0 : (fontHorizontalValue == 'center' ? halign = 1 : halign = 2)
+    fontHorizontalValue === 'left' ? halign = 0 : (fontHorizontalValue === 'center' ? halign = 1 : halign = 2)
     //const valign = fontVerticalValue;
-    fontVerticalValue == 'left' ? valign = 0 : (fontVerticalValue == 'center' ? valign = 1 : valign = 2)
+    fontVerticalValue === 'left' ? valign = 0 : (fontVerticalValue === 'center' ? valign = 1 : valign = 2)
 
     console.log("LOCATION", location)
-
-    location ? (location.coords.latitude ? lat = '41.934977' : lat = '') :  lat = '';
-    location ? (location.coords.longitude ? lon = '41.934977' : lon = '') :  lon = '';
-    //location.coords.longitude ? lon = '-82.539532' : lon = '';
+    let lat;
+    let lon;
+    location ? (location.coords.latitude ? lat = location.coords.latitude : lat = '') :  lat = '';
+    location ? (location.coords.longitude ? lon = location.coords.longitude : lon = '') :  lon = '';
+    //location.coords.longitude ? lon = '-82.539532' : lon = ''41.934977'';
 
     console.log({
       sid,
@@ -406,7 +420,7 @@ const CreaTwok = ({ navigation }) => {
 
         <Button
           onPress={getMyPosition}
-          title="Learn More"
+          title="GET MY POSITION"
           color="#841584"
           accessibilityLabel="GET MY POSITION"
         />
@@ -414,7 +428,10 @@ const CreaTwok = ({ navigation }) => {
 
       </ScrollView>
 
-
+      <CheckInternet
+          isConnected={isConnected}
+          setIsConnected={setIsConnected}
+      />
 
     </KeyboardAvoidingView>
 
@@ -438,7 +455,7 @@ const styles = StyleSheet.create({
     marginBottom: 16
   },
   input: {
-    borderWidth: StyleSheet.hairlineWidth,
+    //borderWidth: StyleSheet.hairlineWidth,
     borderWidth: 2,
     borderColor: 'black',
     borderRadius: 6,
@@ -490,7 +507,7 @@ const styles = StyleSheet.create({
     //marginBottom: 50,
     //height: '30%',
   },
-  twokStyle: {
+  twokStyle2: {
     width: "100%",
     height: Dimensions.get('window').height,
     backgroundColor: 'yellow',
@@ -502,8 +519,9 @@ const styles = StyleSheet.create({
     fontWeight: "700"
   },
   twokStyle: {
-    width: '100%',
-    height: 400,
+    width: "100%",
+    height: 400
   }
+
 });
 export default CreaTwok;

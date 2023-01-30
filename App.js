@@ -8,6 +8,9 @@ import UtentiSeguiti from './routes/screens/UtentiSeguiti';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const SidContext = createContext();
 
+
+import NetInfo from '@react-native-community/netinfo';
+
 export default function App() {
 
   const [sid, setSid] = useState();
@@ -24,6 +27,15 @@ export default function App() {
     // ? setSid(getData()) : callFunction();
     console.log(sid);
   }, []);
+
+  useEffect(()=>{
+    NetInfo.fetch().then(state => {
+      console.log('Connection type', state.type);
+      console.log('Is connected?', state.isConnected);
+      state.isConnected ? alert("internet ok") : alert("non è presente una copertura internet")
+    });
+  },[])
+
 
   const callFunction = () => {
     console.log("call")
@@ -72,6 +84,13 @@ export default function App() {
   
     console.log('Done.')
   }
+
+
+
+  const unsubscribe = NetInfo.addEventListener(state => {
+    console.log('Connection type', state.type);
+    console.log('Is connected?', state.isConnected);
+  });
 
 
   return (

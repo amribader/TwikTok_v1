@@ -10,6 +10,7 @@ import { SingleTwokLoaderHelper } from '../../components/TwokLoaderHelper';
 import { getTwok } from '../../components/CommunicationController';
 import { SidContext } from '../../App';
 import * as SQLite from "expo-sqlite";
+import CheckInternet from "../../components/CheckInternet";
 /* 
 • Bacheca dei twok. Una schermata mostra, uno per volta, i twok creati da altri utenti e 
 forniti dal server. L’utente può anche vedere l’autore del twok (immagine e nome)
@@ -29,6 +30,8 @@ const Bacheca = ({ navigation }) => {
         sid ? setBol(true) : setBol(false)
     }, [sid]);
 
+
+    const [isConnected,setIsConnected] = useState(false);
 
     const [map, SetMap] = useState(new Map());
     function openDatabase() {
@@ -72,6 +75,10 @@ const Bacheca = ({ navigation }) => {
                     )
 
                 }
+                <CheckInternet
+                    isConnected={isConnected}
+                    setIsConnected={setIsConnected}
+                />
             </>
         </SafeAreaView>
     );

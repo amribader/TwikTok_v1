@@ -23,6 +23,7 @@ const TwokLoaderHelper = async (sid, tidSequence) => {
 
 
 
+//lo uso
 const SingleTwokLoaderHelper = async (sid, tidSequence, uid) => {
     let flag = true;
     //console.log({sid,tidSequence})
@@ -33,7 +34,7 @@ const SingleTwokLoaderHelper = async (sid, tidSequence, uid) => {
         //console.log("ciao")
         //const newTwok = await getTwok(sid, tidSequence, uid)
         //const newTwok = await getTwok(sid, null, null)
-        const newTwok = await getTwok(sid, null, uid)
+        const newTwok = await getTwok(sid, null, uid).catch(error => alert("Errore Twok TLH singleLoaderHelper"+error))
         //console.log(newTwok)
         //newTwok ? twoks.push(newTwok) : console.log(tidSequence,"vuoto")
         //Object.keys(newTwok).length === 0 ? tidSequence++ : twoks.push(newTwok)
@@ -48,7 +49,7 @@ const SingleTwokLoaderHelper = async (sid, tidSequence, uid) => {
 
         tidSequence++;
 
-        if (twoks.length == 5) {
+        if (twoks.length === 5) {
             flag = false;
         }
     }
@@ -64,7 +65,7 @@ const SingleTwokLoaderHelper = async (sid, tidSequence, uid) => {
 
 const TwokHandler = (sid, tidSequence) => {
     const [map, setMap] = useState(null);
-    const array = [];
+    let array = [];
     SingleTwokLoaderHelper(sid, tidSequence)
         .then(result => {
             array = result;
@@ -82,6 +83,7 @@ const TwokHandler = (sid, tidSequence) => {
 
 }
 /////////////////////////////////////////////////////
+//lo uso per il tid
 const SingleTwokHandler = async (sid, tidSequence,uid, map) => {
 
     //const [map, setMap] = useState(null);
@@ -89,7 +91,7 @@ const SingleTwokHandler = async (sid, tidSequence,uid, map) => {
     await SingleTwokLoaderHelper(sid, tidSequence,uid)
         .then(result => {
             array = result;
-        })
+        }).catch(error => alert("Errore Twok TLH SingTwokHandler"+error))
 
     array.forEach((elem) => {
         if (!map.has(elem.tid)) {
@@ -109,7 +111,7 @@ const oneTwok = async (sid, tidSequence,uid, map) => {
     while (bool) {
         //const newTwok = await getTwok(sid, tidSequence,uid)
         //const newTwok = await getTwok(sid, null,null)
-        const newTwok = await getTwok(sid, null,uid)
+        const newTwok = await getTwok(sid, null,uid).catch(error => alert("Errore Twok TLH oneTwok"+error))
         obj = newTwok;
         /* .then(result => {
             obj = result;

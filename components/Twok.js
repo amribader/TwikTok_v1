@@ -7,6 +7,9 @@ import { getPicture } from './CommunicationController';
 import { SidContext } from '../App';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+
+import { useHeaderHeight } from '@react-navigation/elements';
+
 import {
   createTable,
   insertUser,
@@ -62,7 +65,8 @@ const Twok = ({ item, auts, onLoadPicture, navigation }) => {
 
   useEffect(() => {
     console.log(item.pversion)
-    if(item.pversion==0){
+    if(item.pversion===0){
+      setstate(null)
       console.log(item.pversion,"vale 0")
       return
     }
@@ -74,11 +78,39 @@ const Twok = ({ item, auts, onLoadPicture, navigation }) => {
         //console.log("-->", result)
         //console.log("-->", result._array)
         if(result._array.length){
-          console.log("immagine presente salvo sullo stato dal db")
-          setstate(result._array[0].picture)
-          console.debug("IMMAGINE",result._array.picture)
+
+            //qquindi devo controla ilp ersions  se il pvesiio è ivrsovuol diie chemmagi
+
+            //e poi faccio audate sul db
+            console.log("immagine presente salvo sullo stato dal db")
+            if (result.pversion < item.pversion) {
+                //se è minore allora devo fare update e pendere qulla nuova dalla
+                //chiamata di rete e salvare sul db
+                console.log("immagine che ho sul db è vecchia faccio una chiamata al server per recuperare quella più recente")
+                getPicture(sid, item.uid)
+                    .then(res => {
+                        updateUser(res.uid, res.picture, res.pversion)
+                        setstate(res.picture)
+
+                        if (res.picture.substring(0, 4) === "file") {
+                            console.log("formato immagine errato file:")
+                            setstate(null)
+                        }
+                        //inserto into db
+                    })
+                    .catch(error => alert("Errore Twok getTwok"+error))
+
+
+            }else{
+                console.log("immagine sul db è la più recente la prendo e la setto dul db")
+                setstate(result._array[0].picture)
+
+                console.debug("IMMAGINE", result._array.picture)
+            }
+
+
         }else{
-          
+          //todo in teoria questo ramo andreppe tolto è ridondante
           console.log("vuoto immagine non presente sul db")
           //niente immagine nel db quindi faccio chiamata e salvo nel db
           pictureHandler()
@@ -102,8 +134,15 @@ const Twok = ({ item, auts, onLoadPicture, navigation }) => {
         setPic(result.picture)
         setstate(result.picture)
         insertUser(result.uid, result.picture, result.pversion, result.name)
+
+          if (result.picture.substring(0, 4) === "file") {
+              console.log("formato immagine errato file:")
+              setstate(null)
+          }
         //inserto into db
       })
+        .catch(error => alert("Errore Twok getTwok"+error))
+
   }
 
 
@@ -162,6 +201,7 @@ const Twok = ({ item, auts, onLoadPicture, navigation }) => {
       >
         {state ? (<View style={[
           {
+              alignItems: textAlignmentsVertical[item.halign],
             justifyContent: textAlignmentsVertical[item.valign],
             //alignItems: textAlignments[item.halign]
           }]}><Image
@@ -176,7 +216,11 @@ const Twok = ({ item, auts, onLoadPicture, navigation }) => {
       </TouchableOpacity>
 
       {
-        item.lat ? (<View>
+        item.lat ? (<View style={[
+            {
+                justifyContent: textAlignmentsVertical[item.valign],
+                //alignItems: textAlignments[item.halign]
+            }]}>
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate('TwokOnMap', {

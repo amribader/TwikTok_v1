@@ -1,4 +1,5 @@
-/* import React, { useState, useEffect } from "react"
+/*
+ import React, { useState, useEffect } from "react"
 import { Dimensions, StyleSheet, Text, View } from "react-native"
 import MapView, { Callout, Circle, Marker } from "react-native-maps"
 
@@ -34,24 +35,24 @@ export default function TwokOnMap({ navigation, route }) {
 
     return (
         <View style={{ marginTop: 50, flex: 1 }}>
-            {/* <MapView
+             <MapView
                 style={styles.map}
                 initialRegion={region}
                 provider="google"
-            > }
-/*             {
+            >
+            {
                 region ? (
                     <MapView style={styles.map} initialRegion={{ latitude: region.latitude, longitude: region.longitude }}>
-                        {/* <Marker
+                         <Marker
                             cordinate={region} title='Marker'
-                        /> *
+                        />
                     </MapView>
                 ) : (
                     <Text>CARICAMENTO MAPPE IN CORSO</Text>
                 )
             }
- */
-{/*  <Marker coordinate={{ latitude: region.latitude, longitude: region.longitude }} />
+
+  <Marker coordinate={{ latitude: region.latitude, longitude: region.longitude }} />
                 <Marker
                     coordinate={pin}
                     pinColor="black"
@@ -70,8 +71,8 @@ export default function TwokOnMap({ navigation, route }) {
                         <Text>I'm here</Text>
                     </Callout>
                 </Marker>
-                <Circle center={pin} radius={1000} /> */}
-{/* </MapView> */ }/* 
+                <Circle center={pin} radius={1000} />
+ </MapView>
         </View>
     )
 }
@@ -88,14 +89,13 @@ const styles = StyleSheet.create({
         height: Dimensions.get("window").height
     }
 })
- 
 */
-/*
+
 import React, { useState, useEffect } from 'react';
 import MapView, { Callout, Circle, Marker } from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions, Button, Alert } from 'react-native';
 import * as Location from 'expo-location';
-const TwokOnMap = ({ navigation, route }) => {
+export default function TwokOnMap ({ navigation, route }) {
     const [pin, setPin] = useState({
         latitude: route.params.lat,
         longitude: route.params.lon
@@ -196,7 +196,29 @@ const TwokOnMap = ({ navigation, route }) => {
         </View>
     );
 }
-*/
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    viewButton: {
+        //flex:2,
+        marginTop: 40,
+    },
+    map: {
+        //flex: 2,
+        width: Dimensions.get('window').width,
+        //height: (Dimensions.get('window').height),
+        height: '90%',
+        // marginTop: 180,
+    },
+});
+
+/*
+
 import { View, Text, Dimensions, StyleSheet } from 'react-native'
 import React from 'react'
 
@@ -230,3 +252,4 @@ const styles = StyleSheet.create({
 
 export default TwokOnMap;
 
+*/

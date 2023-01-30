@@ -14,6 +14,7 @@ import {
 import * as SQLite from "expo-sqlite";
 import { getPicture } from '../../components/CommunicationController';
 import { SidContext } from '../../App';
+import {MaterialCommunityIcons} from "@expo/vector-icons";
 function openDatabase() {
     const db = SQLite.openDatabase("db.db");
     return db;
@@ -26,7 +27,8 @@ const SingleUserRow = ({ item, navigation }) => {
     const [state, setstate] = useState();
     useEffect(() => {
         console.log(item.pversion)
-        if (item.pversion == 0) {
+        if (item.pversion === 0) {
+            setstate(null)
             console.log(item.pversion, "vale 0")
             return
         }
@@ -102,13 +104,19 @@ const SingleUserRow = ({ item, navigation }) => {
                     name: item.name
                 })}
             >
+                {state ? (
+                    <><Image
+                        style={styles.logo}
+                        source={{
+                            uri: 'data:image/png;base64,'+state,
+                        }}
+                    /></>
+                ) : (
+                    <>
+                        <MaterialCommunityIcons name="account-circle" color={'black'} size={100} />
+                    </>
+                )}
 
-                <Image
-                    style={styles.logo}
-                    source={{
-                        uri: 'data:image/png;base64,'+state,
-                    }}
-                />
 
                 <Text>
                     {item.uid}

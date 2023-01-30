@@ -11,8 +11,9 @@ const ListaTwok = ({ sid, tid, uid, map, setMap, navigation }) => {
     const [getData, setData] = useState([]);
     const [mapAut, SetmapAut] = useState(new Map());
 
+    /*
     //UseEffect funzionante ma da risolvere il fatto che 
-    /* useEffect(() => {
+     useEffect(() => {
 
         SingleTwokHandler(sid, tid, uid, map)
             .then(result => {
@@ -63,6 +64,7 @@ const ListaTwok = ({ sid, tid, uid, map, setMap, navigation }) => {
                 setData(Array.from(map.values()))
                 return
             })
+            .catch(error => alert("Errore caricamento Twok ListaTwok"+error))
         /* 
         getTwok(sid)
             .then(result => {
